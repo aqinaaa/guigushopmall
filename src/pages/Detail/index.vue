@@ -377,11 +377,14 @@ export default {
       // 1:发请求---将产品加入到数据库（通知服务器）
       try {
         // 成功
-        await this.$store.dispatch('addOrUpdatedShopCar', { skuId: this.$route.params.skuid, skuNum: this.skuNum });
+        await this.$store.dispatch('addOrUpdatedShopCar', { skuId: this.$route.params.skuId, skuNum: this.skuNum });
         // 在路由跳转的时候还需要将产品的信息带给下一级的路由组件
         // 本地存储|会话存储一般存储的是字符串:复杂数据通过会话存储传递过去
         sessionStorage.setItem('SKUINFO', JSON.stringify(this.skuInfo));
-        this.$router.push({ name: 'addcartsuccess', query: { skuNum: this.skuNum } })
+        this.$router.push({
+          path: '/addcartsuccess',
+          query: { skuNum: this.skuNum }
+        })
       } catch (error) {
         // 失败
         alert(error.message);

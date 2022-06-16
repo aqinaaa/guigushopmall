@@ -40,3 +40,5 @@ export const reqRegister = (data) => requests({ url: `/user/passport/register`, 
 export const reqLogin = (data) => requests({ url: `/user/passport/login`, data, method: 'POST' })
     //登录用户信息： url:/api/user/passport/auth/getUserInfo  method:get
 export const reqUserInfo = () => requests({ url: '/user/passport/auth/getUserInfo', method: 'get' })
+    // 退出登录
+export const reqUserLoginOut = () => requests({ url: '/user/passport/logout', method: 'get' }) //错误：多谢了一个api请求失败

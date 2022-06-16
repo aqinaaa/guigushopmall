@@ -2,6 +2,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from './routes'
+import store from '@/store'
 // 使用插件
 Vue.use(VueRouter);
 
@@ -29,11 +30,52 @@ VueRouter.prototype.replace = function(location, resolve, reject) {
         originReplace.call(this, location, () => {}, () => {});
     }
 }
-export default new VueRouter({
-    // 配置路由
-    routes,
-    // 让页面路由跳转后返回到顶部
-    scrollBehavior(to, from, savedPosition) {
-        return { y: 0 }
+let router = new VueRouter({
+        // 配置路由
+        routes,
+        // 让页面路由跳转后返回到顶部
+        scrollBehavior(to, from, savedPosition) {
+            return { y: 0 }
+        }
+    })
+    // 全局导航守卫：前置守卫（在路由跳转之前进行判断）
+router.beforeEach(async(to, from, next) => {
+    // to:可以获取到你要跳转到的那个路由信息
+    // from:可以获取到你从那个路由而来的信息
+    // next:放行函数 next()放行， next(path)放行到指令路由   next(false):--
+    next();
+    let token = store.state.user.token;
+    let name = store.state.user.name;
+    // 如果已经登录了，要去的页面是登录页面则next到首页
+    //测试打印： console.log(store)
+    if (token) {
+        // 登录后去的是login登录页
+        if (to.path == '/login') {
+            next('/home')
+        } else {
+            // 登录后去其他页面，放行
+            // 派发获取用户信息的action,获取到用户信息之后再放行
+            // 判断是否有用户信息
+            if (name) {
+                // 有用户信息，直接放行
+                next()
+            } else {
+                // 没有用户信息，派发action获取用户信息
+                try {
+                    // 登录情况下跳转路由获取用户信息成功
+                    await store.dispatch('getUserInfo');
+                    next();
+                } catch (error) {
+                    // 登录情况下获取用户信息失败：一般是token失效了,则派发仓库中的退出登录action清空服务器token数据和浏览器中仓库中的信息
+                    // 清除token
+                    await store.dispatch('userLoginOut');
+                    next('/login');
+                }
+            }
+        }
+    } else {
+        // 没有登录:放行
+        next()
     }
-})
+});
+export default router;

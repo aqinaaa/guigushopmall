@@ -1,6 +1,6 @@
 // 登录与注册的模块
-import { reqGetCode, reqRegister, reqLogin, reqUserInfo } from "@/api/index"
-import { setToken } from "@/utils/token";
+import { reqGetCode, reqRegister, reqLogin, reqUserInfo, reqUserLoginOut } from "@/api/index"
+import { setToken, removeToken } from "@/utils/token";
 const state = {
     code: '',
     //  localStorage中有token的话则获取到，没有的话初始值为null
@@ -16,6 +16,12 @@ const mutations = {
     },
     GETUSERINFO(state, name) {
         state.name = name
+    },
+    CLEAR(state) {
+        state.token = ''
+        state.name = ''
+            // 清空本地存储的token:从utils封装的函数中引入
+        removeToken()
     }
 };
 const actions = {
@@ -31,7 +37,8 @@ const actions = {
             return Promise.reject(new Error('faile'));
         }
     },
-    async getRegister(data) {
+    // 注册
+    async getRegister({ commit }, data) {
         // 返回结果的data时null，所以不需要三联坏保存数据，返回成功与失败的结果即可
         let result = await reqRegister(data)
             // console.log(result)
@@ -43,6 +50,7 @@ const actions = {
             return Promise.reject(new Error('faile'))
         }
     },
+    // 登录
     async getLogin({ commit }, data) {
         let result = await reqLogin(data)
             // console.log(result)
@@ -59,15 +67,29 @@ const actions = {
             return Promise.reject(new Error('faile'))
         }
     },
+    // 获取用户信息
     async getUserInfo({ commit }) {
         let result = await reqUserInfo()
-        console.log(result)
+            // console.log(result)
         if (result.code == 200) {
             commit('GETUSERINFO', result.data.name)
             return 'ok'
         } else {
             return Promise.reject(new Error('faile'))
         }
+    },
+    // 退出登录
+    async userLoginOut({ commit }) {
+        // 发送请求，通知服务器清空token
+        let result = await reqUserLoginOut()
+        if (result.code == 200) {
+            // 如果后台接口请求成功，则提交mutation函数清空state仓库中的数据
+            commit('CLEAR');
+            return 'OK'
+        } else {
+            return Promise.reject(new error('fails'))
+        }
+        // console.log(result)
     }
 };
 const getters = {}

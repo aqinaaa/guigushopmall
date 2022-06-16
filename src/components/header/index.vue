@@ -12,7 +12,7 @@
           </p>
           <p v-else>
             <a>{{ username }}</a>
-            <a class="register">退出登录</a>
+            <a class="register" @click="loginOut">退出登录</a>
           </p>
         </div>
         <div class="typeList">
@@ -81,6 +81,20 @@ export default {
       // 面试题3：params参数可以传递也可以不传递，但是如果传递是空串，如何解决？
       // this.$router.push({ name: "search", params: { keyword: '' | undefined } })
 
+
+    },
+    // 退出登录：
+    // --1：需要发请求，通知服务器退出登录，清除一些数据：token
+    // --2:清除项目当中的数据【userInfo.token]等
+    async loginOut() {
+      // alert('123')
+      try {
+        await this.$store.dispatch('userLoginOut')
+        // 退出成功之后页面跳转到首页
+        this.$router.push('/home')
+      } catch (error) {
+        console.log('首页header退出登录失败')
+      }
 
     }
   },

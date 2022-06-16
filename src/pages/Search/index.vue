@@ -76,6 +76,7 @@
                   </div>
                   <div class="operate">
                     <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
+                    <!-- <router-link to="/addcartsuccess" class="sui-btn btn-bordered btn-danger">加入购物车</router-link> -->
                     <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
                   </div>
                 </div>
@@ -95,7 +96,6 @@
 <script>
 import SearchSelector from './SearchSelector/SearchSelector'
 import { mapGetters, mapState } from 'vuex'
-import search from '@/store/search'
 export default {
   name: 'Search',
   components: {
@@ -143,7 +143,7 @@ export default {
     },
     // 从search仓库中获取总数据条数到当前组件页面
     ...mapState({
-      total: state => state.search.getSearchList.total
+      total: state => state.search1.getSearchList.total
     })
   },
   beforeMounted() {
@@ -157,8 +157,12 @@ export default {
   methods: {
     // 向服务器发送请求获取search模块数据（参数不同返回不同的数据进行展示）
     // 2.在发请求之前带给服务器参数，动态返回数据。
-    getData() {
-      this.$store.dispatch('getSearchList', this.searchParams)
+    async getData() {
+      try {
+        await this.$store.dispatch('getSearchList', this.searchParams)
+      } catch (error) {
+        console.log(error)
+      }
     },
     removeCategoryName() {
       // 让当前categoryName等为underfined可以传递参数过去，如果是null则还是汇传递参数，只不过参数为空

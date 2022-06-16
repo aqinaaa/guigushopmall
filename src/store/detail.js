@@ -1,4 +1,4 @@
-import { reqAddOrUpdatedShopCart, reqGetgoodsinfo } from "@/api";
+import { reqAddOrUpdatedShopCart, reqGetgoodsinfo } from "@/api/index";
 // // 封装游客身份模块uuid
 const state = {
     goodsInfo: {},
@@ -21,9 +21,11 @@ const actions = {
     // 购物车数量修改：发送post请求，只是修改商品数量，不用存储到仓库
     async addOrUpdatedShopCar({ commit }, { skuId, skuNum }) {
         let result = await reqAddOrUpdatedShopCart(skuId, skuNum);
-        代表服务器加入购物车成功
-        if (result.code == 200) {
+        console.log(result)
+            // 代表服务器加入购物车成功
+        if (result.code == 200 || result.code == 201) {
             return 'ok'
+
         } else {
             // 代表加入购物车失败
             return Promise.reject(new Error('faile'));

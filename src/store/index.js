@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import home from './home.js'
-// import search from './search'
+import search1 from './search1'
 import detail from './detail.js'
 import shopcart from './shopCart.js'
 import user from './user.js'
@@ -12,7 +12,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         home,
-        // search,
+        search1,
         detail,
         shopcart,
         user
