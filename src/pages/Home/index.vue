@@ -36,9 +36,11 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch('getFloorList')
-  },
-
+    this.$store.dispatch('getFloorList'),
+      // 登录成功后跳转到home页面中并获取用户信息修改页面
+      this.$store.dispatch('getUserInfo')
+    // console.log(this.$store)
+  }
 }
 </script>
 

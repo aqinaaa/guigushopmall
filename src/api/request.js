@@ -1,6 +1,7 @@
 import axios from 'axios';
 // 导入仓库
-// import store from '@/store'
+import store from '../store'
+
 // 引入uuid回调函数，随机成成一个游客身份
 import { getUUID } from '@/utils'
 // 引入进度条（start:进度条开始 done:进度条结束）-引入进度条样式
@@ -20,18 +21,17 @@ const requests = axios.create({
 // 请求拦截器：在发请求之前，请求拦截器可以检测到，可以在请求发出去之前做一些事情
 requests.interceptors.request.use((config => {
     // config:配置对象，对象里面有一个属性很重要，headers请求头
-    nprogress.start();
+
     const USER_ID = getUUID()
         // console.log(USER_ID)
     if (USER_ID) {
         config.headers.userTempId = USER_ID;
     }
-
-    //token[公共参数]
-
-    // if (store.state.user.token) {
-    //     config.headers.token = store.state.user.token;
-    // }
+    // token[公共参数]
+    if (store.state.user.token) {
+        config.headers.token = store.state.user.token;
+    }
+    nprogress.start();
     return config;
 }));
 // 响应拦截器

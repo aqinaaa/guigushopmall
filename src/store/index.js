@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import home from './home'
-import search from './search'
-import detail from './detail'
-import shopcart from './shopCart'
-import user from './user'
+import home from './home.js'
+// import search from './search'
+import detail from './detail.js'
+import shopcart from './shopCart.js'
+import user from './user.js'
 
 Vue.use(Vuex);
 // state:仓库存储数据的地方
@@ -12,7 +12,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         home,
-        search,
+        // search,
         detail,
         shopcart,
         user

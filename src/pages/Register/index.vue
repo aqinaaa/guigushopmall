@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import { METHODS } from 'http'
+
 
 export default {
   name: 'Register',
@@ -87,7 +87,7 @@ export default {
         // console.log(this.$store)
         this.code = this.$store.state.user.code
       } catch (error) {
-        new error(faile)
+        console.log(error)
       }
     },
     //2--注册事件

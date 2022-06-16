@@ -21,13 +21,13 @@ const actions = {
     // 购物车数量修改：发送post请求，只是修改商品数量，不用存储到仓库
     async addOrUpdatedShopCar({ commit }, { skuId, skuNum }) {
         let result = await reqAddOrUpdatedShopCart(skuId, skuNum);
-        // 代表服务器加入购物车成功
-        // if (result.code == 200) {
-        //     return 'ok'
-        // } else {
-        //     // 代表加入购物车失败
-        //     return Promise.reject(new Error('faile'));
-        // }
+        代表服务器加入购物车成功
+        if (result.code == 200) {
+            return 'ok'
+        } else {
+            // 代表加入购物车失败
+            return Promise.reject(new Error('faile'));
+        }
     }
 };
 const getters = {
@@ -41,7 +41,7 @@ const getters = {
         return state.goodsInfo.skuInfo || {};
     },
     // 简化产品售卖属性
-    spuSaleAttrList(atate) {
+    spuSaleAttrList(state) {
         return state.goodsInfo.spuSaleAttrList || {};
     }
 };

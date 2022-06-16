@@ -1,8 +1,11 @@
 // 登录与注册的模块
-import { reqGetCode, reqRegister, reqLogin } from "@/api"
+import { reqGetCode, reqRegister, reqLogin, reqUserInfo } from "@/api/index"
+import { setToken } from "@/utils/token";
 const state = {
     code: '',
-    token: ''
+    //  localStorage中有token的话则获取到，没有的话初始值为null
+    token: localStorage.getItem('TOKEN'),
+    name: ''
 };
 const mutations = {
     GETCODE(state, code) {
@@ -10,6 +13,9 @@ const mutations = {
     },
     GETLOGIN(state, token) {
         state.token = token
+    },
+    GETUSERINFO(state, name) {
+        state.name = name
     }
 };
 const actions = {
@@ -25,7 +31,7 @@ const actions = {
             return Promise.reject(new Error('faile'));
         }
     },
-    async getRegister({ commit }, data) {
+    async getRegister(data) {
         // 返回结果的data时null，所以不需要三联坏保存数据，返回成功与失败的结果即可
         let result = await reqRegister(data)
             // console.log(result)
@@ -43,15 +49,28 @@ const actions = {
             // 如果请求成功：将结果data中的token保存到仓库中
         if (result.code == 200) {
             commit('GETLOGIN', result.data.token)
+                // 将token保存到本地存储
+                // localStorage.setItem('TOKEN', result.data.token);
+                // 如果有些人也可能会采用从utils中导入一个封装的函数
+            setToken(result.data.token)
             return 'ok'
         } else {
             // 如果请求失败
             return Promise.reject(new Error('faile'))
         }
+    },
+    async getUserInfo({ commit }) {
+        let result = await reqUserInfo()
+        console.log(result)
+        if (result.code == 200) {
+            commit('GETUSERINFO', result.data.name)
+            return 'ok'
+        } else {
+            return Promise.reject(new Error('faile'))
+        }
     }
 };
-const getters = {};
-
+const getters = {}
 export default {
     state,
     mutations,

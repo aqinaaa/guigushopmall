@@ -10,6 +10,7 @@ import TypeNav from '@/components/Typenav'
 import carousel from '@/components/carousel'
 import pagination from '@/components/pagination'
 
+
 Vue.config.productionTip = false
     // component第一个参数式全局组件的名字，第二个参数是哪一个组件
 Vue.component(TypeNav.name, TypeNav);
