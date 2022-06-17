@@ -1,11 +1,13 @@
 // 登录与注册的模块
-import { reqGetCode, reqRegister, reqLogin, reqUserInfo, reqUserLoginOut } from "@/api/index"
+import { reqGetCode, reqRegister, reqLogin, reqUserInfo, reqUserLoginOut, reqAddressInfo, reqOrdertrade } from "@/api/index"
 import { setToken, removeToken } from "@/utils/token";
 const state = {
     code: '',
     //  localStorage中有token的话则获取到，没有的话初始值为null
     token: localStorage.getItem('TOKEN'),
-    name: ''
+    name: '',
+    tradeInfo: [],
+    orderInfo: {}
 };
 const mutations = {
     GETCODE(state, code) {
@@ -22,6 +24,12 @@ const mutations = {
         state.name = ''
             // 清空本地存储的token:从utils封装的函数中引入
         removeToken()
+    },
+    GETADDRESS(state, tradeInfo) {
+        state.tradeInfo = tradeInfo
+    },
+    GETORDERTRADE(state, orderInfo) {
+        state.orderInfo = orderInfo
     }
 };
 const actions = {
@@ -90,7 +98,27 @@ const actions = {
             return Promise.reject(new error('fails'))
         }
         // console.log(result)
+    },
+    // ---------------------------------------------------订单地址信息-------------
+    //获取用户信息地址
+    async getAddress({ commit, state, dispatch }) {
+        let result = await reqAddressInfo();
+        console.log(result)
+        if (result.code == 200) {
+            commit('GETADDRESS', result.data);
+            return 'ok'
+        } else {
+            return Promise.reject(new Error(result.message));
+        }
+    },
+    //获取商品清单
+    async getOrderTrade({ commit }) {
+        let result = await reqOrdertrade()
+        if (result.code == 200) {
+            commit('GETORDERTRADE', result.data)
+        }
     }
+
 };
 const getters = {}
 export default {

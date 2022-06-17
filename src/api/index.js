@@ -42,3 +42,11 @@ export const reqLogin = (data) => requests({ url: `/user/passport/login`, data, 
 export const reqUserInfo = () => requests({ url: '/user/passport/auth/getUserInfo', method: 'get' })
     // 退出登录
 export const reqUserLoginOut = () => requests({ url: '/user/passport/logout', method: 'get' }) //错误：多谢了一个api请求失败
+    // 获取订单交易页信息 URL:/api/order/auth/trade   GET  有返回的数据
+export const reqAddressInfo = () => requests({ url: '/user/userAddress/auth/findUserAddressList', method: 'get' })
+    // //获取商品清单：URL:/api/order/auth/trade    GET
+export const reqOrdertrade = () => requests({ url: '/order/auth/trade', method: 'get' })
+    // 提交订单的接口：/api/order/auth/submitOrder?tradeNo={tradeNo}   请求方式：POST   带参数：param&data
+export const reqSubMit = (tradeNo, data) => requests({ url: `/order/auth/submitOrder?tradeNo=${tradeNo}`, data, method: 'post' })
+    // 获取订单支付信息：url:/api/payment/weixin/createNative/{orderId}  请求方式：GET   参数：orderId
+export const reqPayInfo = (orderId) => requests({ url: `/payment/weixin/createNative/${orderId}`, method: 'get' })

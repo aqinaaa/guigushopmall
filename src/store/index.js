@@ -5,6 +5,7 @@ import search1 from './search1'
 import detail from './detail.js'
 import shopcart from './shopCart.js'
 import user from './user.js'
+import trade from './trade'
 
 Vue.use(Vuex);
 // state:仓库存储数据的地方
@@ -15,6 +16,7 @@ export default new Vuex.Store({
         search1,
         detail,
         shopcart,
-        user
+        user,
+        trade,
     }
 })

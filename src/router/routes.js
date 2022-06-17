@@ -6,7 +6,19 @@
  import Detail from '@/pages/Detail'
  import AddCartSuccess from '@/pages/AddCartSuccess'
  import ShopCart from '@/pages/ShopCart'
+ import Trade from '@/pages/Trade'
+ import Pay from '@/pages/Pay'
  export default [{
+         path: "/pay",
+         component: Pay,
+         meta: { show: false }
+     },
+     {
+         path: "/trade",
+         component: Trade,
+         meta: { show: false }
+     },
+     {
          path: "/shopcart",
          component: ShopCart,
          meta: { show: false }
