@@ -5,7 +5,9 @@ import mockRequests from './mockRequest';
 //请求地址： /api/product/getBaseCategoryList  GET 参数无
 // axios 发请求返回结果是promise函数
 export const reqCatagoryList = () => requests({ url: '/product/getBaseCategoryList', method: 'get' });
+// 轮播图接口请求：（mock假数据)
 export const reqBannerList = () => mockRequests({ url: '/banner', method: 'get' });
+// 小轮播图请求：（mock假数据)
 export const reqFloorList = () => mockRequests({ url: '/floor', method: 'get' });
 // ---4:获取搜索模块数据 地址：/api/list  请求方式POST
 /*{
@@ -50,3 +52,7 @@ export const reqOrdertrade = () => requests({ url: '/order/auth/trade', method: 
 export const reqSubMit = (tradeNo, data) => requests({ url: `/order/auth/submitOrder?tradeNo=${tradeNo}`, data, method: 'post' })
     // 获取订单支付信息：url:/api/payment/weixin/createNative/{orderId}  请求方式：GET   参数：orderId
 export const reqPayInfo = (orderId) => requests({ url: `/payment/weixin/createNative/${orderId}`, method: 'get' })
+    // 查询订单支付状态：url：/api/payment/weixin/queryPayStatus/{orderId}  请求方式：GET   参数：orderId
+export const reqPayStatus = (orderId) => requests({ url: `/payment/weixin/queryPayStatus/${orderId}`, method: 'get' })
+    // 获取我的订单数据： URL:/api/order/auth/{page}/{limit}  请求方式：GET   参数：page   limit
+export const reqMyData = (page, limit) => requests({ url: `/order/auth/${page}/${limit}`, method: 'get' })

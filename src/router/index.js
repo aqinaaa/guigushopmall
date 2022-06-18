@@ -74,8 +74,17 @@ router.beforeEach(async(to, from, next) => {
             }
         }
     } else {
-        // 没有登录:放行
-        next()
+        // 没有登录:如果去的是支付页面||交易页面||center个人中心页面，则应该路由跳转到登录页login
+        let toPath = to.path
+            // console.log(toPath)  测试
+        if (toPath.indexOf('/pay') != -1 || toPath.indexOf('/trade') != -1 || toPath.indexOf('/center') != -1) {
+            // 路由跳转到login登录页面，但是通过to.path将要去的路由携带到query参数里面
+            // 把想去但是没有去成的路由报存到路由里面
+            next('/login?redirect=' + toPath);
+        } else {
+            // 如果去的不是这些交易支付个人中心相关的页面，则直接放行
+            next();
+        }
     }
 });
 export default router;

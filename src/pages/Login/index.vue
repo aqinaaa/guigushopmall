@@ -80,7 +80,10 @@ export default {
       try {
         (phone && password) && await this.$store.dispatch('getLogin', { password, phone })
         // 如果登录成功，则路由跳转到首页
-        this.$router.push('/home')
+        // 如果用户在登录之前点击了其他页面，路由里面设置的query参数已经将要去的path保存到路由里面，需要判断路由中有没有query参数，如果有的话去对应的页面
+        let toPath = this.$route.query.redirect || '/home'   //有参数就让toPath等于参数，没有参数就让toPath等于'/home'
+        this.$router.push(toPath);
+        // this.$router.push('/home')
       } catch (error) {
 
       }
