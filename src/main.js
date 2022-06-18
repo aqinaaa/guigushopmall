@@ -21,7 +21,8 @@ import carousel from '@/components/carousel'
 import pagination from '@/components/pagination'
 // const loadimage = require('./assets/R-C.gif')
 import atm from '@/assets/R-C.gif'
-
+// 引入表单验证的引入js
+import validate from '@/validata'
 
 // 图片懒加载的使用
 Vue.use(VueLazyload, {
