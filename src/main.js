@@ -10,12 +10,24 @@ import 'element-ui/lib/theme-chalk/index.css';
 // 按需引入
 import { Button, MessageBox, } from 'element-ui';
 // 统一接口api文件夹里面全部请求函数(*as api是将全部引入的数据起别名？)
+
+// 图片懒加载
+import VueLazyload from 'vue-lazyload'
+
 import * as API from '@/api';
 // 全局组件
 import TypeNav from '@/components/Typenav'
 import carousel from '@/components/carousel'
 import pagination from '@/components/pagination'
-// element-ui还有一种注册方式是挂载原型上
+// const loadimage = require('./assets/R-C.gif')
+import atm from '@/assets/R-C.gif'
+
+
+// 图片懒加载的使用
+Vue.use(VueLazyload, {
+        loading: atm
+    })
+    // element-ui还有一种注册方式是挂载原型上
 Vue.component(Button.name, Button);
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
